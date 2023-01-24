@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-      mail: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -53,15 +53,18 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      status: {
+      rol: {
         type: DataTypes.ENUM("Admin", "User"),
         defaultValue: "User",
+      },
+      permissions: {
+        type: DataTypes.ENUM("All", "Edit", "Client", "Banned"),
+        defaultValue: "Watch",
       },
 
       image: {
         type: DataTypes.TEXT,
       },
-     
     },
     {
       timestamps: false,
