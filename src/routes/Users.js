@@ -1,38 +1,17 @@
-const users = require("../utils/users")
-const { Router } = require("express");
-const { postUser } = require("../controllers/userController");
+const { Router } = require('express');
+const userController = require('../controllers/userController');
+const { validateAccessToken, verifyToken } = require("../middlewares/auth0.middleware");
 
-const router = Router();
-
-
-router.get("/", (req, res) =>{
-    try {
-        const allUsers = users.map(elem => {
-            return {
-                id: elem.id,
-                name: elem.name.firstname,
-                mail: elem.email,
-                password: elem.password,
-                phone: elem.phone,
-                address: elem.address.street,
-                nationality: elem.address.city
-            }
-        })
-        return res.status(200).send(allUsers)
-    } catch (error) {
-        return { error: error.message };
-    }
-})
-
-router.post("/create", async (req, res) => {
-    const { name, mail, password, dni, phone, address, nationality, image } = req.body;
-    try {
-        let newUser = await postUser(name, mail, password, dni, phone, address, nationality, image)
-        res.status(200).send(newUser)
-    } catch (error) {
-        return { error: error.message };
-    }
-})
+const userRouter = Router();
+userRouter.get('/', userController.getUser);
+userRouter.post('/login', userController.loginUser);
+userRouter.post('/google', verifyToken, userController.getUserWithGoogle);
+userRouter.post('/register',userController.createUser)
 
 
-module.exports = router;
+userRouter.delete('/:email', validateAccessToken, userController.deleteUser);
+userRouter.get('/verify/:email/:token', userController.verifyUser)
+
+userRouter.get('/search', userController.searchUsers)
+
+module.exports = userRouter;
