@@ -1,12 +1,11 @@
-const { User } = require('../db.js');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const generateToken = require('../utils/generateToken.js');
-const sendEmail  =require ('../utils/sendEmail.js');
-const comparePassword = require('../utils/comparePassword.js');
-const { Op } = require('sequelize');
-const dotenv = require('dotenv').config();
-
+const { User } = require("../db");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const generateToken = require("../utils/generateToken.js");
+const sendEmail = require("../utils/sendEmail.js");
+const comparePassword = require("../utils/comparePassword.js");
+const { Op } = require("sequelize");
+const dotenv = require("dotenv").config();
 
 exports.getUserInfoWithGoogle = async (email) => {
   try {
@@ -133,7 +132,7 @@ exports.createUser = async (user) => {
   user.password = hashedPassword;
   user.status = user.email === "jhoalvipereiraaa@gmail.com" ? "Admin" : "User";
   user.permissions =
-    user.email === "jhoalvipereiraaa@gmail.com" ? "All" : "Watch";
+    user.email === "jhoalvipereiraaa@gmail.com" ? "All" : "Client";
 
   try {
     if (userExists) {
@@ -144,7 +143,7 @@ exports.createUser = async (user) => {
       console.log(token);
       console.log(user);
       const message = `${"http://localhost:3001"}/user/verify/${email}/${token}`;
-      await sendEmail(email, "Zero Two: Verify your account", message);
+      await sendEmail(email, "ShopLine: Verify your account", message);
       return userCreated;
     }
   } catch (err) {
@@ -165,4 +164,24 @@ exports.deleteUser = async (email) => {
   } catch (err) {
     throw new Error(err.message);
   }
-}
+};
+
+exports.searchuser = async (name) => {
+  if (!name) {
+    return [];
+  } else {
+    let user = await User.findAll({
+      where: { nickname: { [Op.like]: `%${name}%` } },
+    });
+
+    try {
+      if (!user) {
+        throw new Error("User could not be founded");
+      } else {
+        return user;
+      }
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+};
