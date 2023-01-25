@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const generateToken = require("../utils/generateToken.js");
 const sendEmail = require("../utils/sendEmail.js");
-const comparePassword = require("../utils/comparePassword.js");
+const comparePassword = require("../utils/comparePasword");
 const { Op } = require("sequelize");
 const dotenv = require("dotenv").config();
 

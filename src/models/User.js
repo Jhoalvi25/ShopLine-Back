@@ -59,7 +59,7 @@ module.exports = (sequelize) => {
       },
       permissions: {
         type: DataTypes.ENUM("All", "Edit", "Client", "Banned"),
-        defaultValue: "Watch",
+        defaultValue: "Client",
       },
 
       image: {
