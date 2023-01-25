@@ -171,7 +171,7 @@ exports.searchuser = async (name) => {
     return [];
   } else {
     let user = await User.findAll({
-      where: { nickname: { [Op.like]: `%${name}%` } },
+      where: { name: { [Op.like]: `%${name}%` } },
     });
 
     try {
