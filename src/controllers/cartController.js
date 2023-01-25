@@ -6,11 +6,12 @@ const createCart = async (listProducts) => {
       listProducts: listProducts,
     });
 
-    const list = await Product.findAll({
+    const list = await Promise.all( listProducts.map( async (e) => {
+      await Product.findAll({
       where: {
-        title: listProducts,
+        title: e.title,
       },
-    });
+    })}));
 
     newCart.addProduct(list);
 
