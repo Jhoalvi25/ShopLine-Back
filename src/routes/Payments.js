@@ -1,19 +1,30 @@
 const { Router } = require("express");
-const PaymentController = require("../controllers/paymentController");
-const PaymentServices = require("../services/paymentServices");
+const getPayment = require("../controllers/paymentController");
+// const PaymentController = require("../controllers/paymentController");
+// const PaymentServices = require("../services/paymentServices");
 
-const PaymentInstance = new PaymentController(new PaymentServices());
+// const PaymentInstance = new PaymentController(new PaymentServices());
 
 const router = Router();
 
-
-router.get("/", (req, res) => {
-    PaymentInstance.getPaymentLink(req, res)
+router.post("/", async (req, res) => {
+    const { id, amount, description } = req.body;
+    try {
+        const stripePayment = await getPayment(id, amount, description)
+        return res.status(200).send(stripePayment);
+    } catch (error) {
+        return { error: error.message };
+    }
 })
 
-router.post("/", (req, res) => {
-    PaymentInstance.getPaymentLink(req, res)
-})
+
+// router.get("/", (req, res) => {
+//     PaymentInstance.getPaymentLink(req, res)
+// })
+
+// router.post("/", (req, res) => {
+//     PaymentInstance.getPaymentLink(req, res)
+// })
 
 
 module.exports = router;
