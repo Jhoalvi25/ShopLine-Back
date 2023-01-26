@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 
 async function comparePassword(plaintextPassword, hash) {
-  console.log(hash, plaintextPassword);
   plaintextPassword = plaintextPassword.toString();
   try {
     let isValid = await bcrypt.compare(plaintextPassword, hash);
