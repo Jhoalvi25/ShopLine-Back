@@ -1,14 +1,14 @@
 const { Cart, Product } = require("../db");
 
-const createCart = async (listProducts) => {
+const createCart = async (products) => {
   try {
     const newCart = await Cart.create({
-      listProducts: listProducts,
+      products,
     });
 
     const list = await Product.findAll({
       where: {
-        title: listProducts,
+        title: products,
       },
     });
 
@@ -25,7 +25,7 @@ const getCart = async (id) => {
     const cartDetail = await Cart.findByPk(id, {
       include: {
         model: Product,
-        attributes: ["title"],
+        attributes: ["title", "price", "image"],
       },
     });
 
@@ -40,7 +40,7 @@ const getCarts = async () => {
     include: [
       {
         model: Product,
-        attributes: ["title"],
+        attributes: ["title", "price", "image"],
         through: {
           attributes: [],
         },

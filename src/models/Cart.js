@@ -12,15 +12,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-      title: {
-        type: DataTypes.STRING,
-      },
-      price: {
-        type: DataTypes.FLOAT,
-      },
-      image: {
-        type: DataTypes.TEXT,
-      },
+      
       total: {
         type: DataTypes.FLOAT,
       },

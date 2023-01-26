@@ -7,13 +7,14 @@ const getReview = async (id) => {
 }
 
 
-const postReview = async (rating, content) => {
+const postReview = async (content, rating) => {
     if(!content){
         throw new Error("Can't submit without a content");
     }
 
     const newReview = await Review.create({
-        rating, content
+        content: content,
+        rating: rating,
     })
 
     return newReview;

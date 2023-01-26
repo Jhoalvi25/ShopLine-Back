@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", async (req, res) => {
     try {
         let reviews = await getAllReviews()
-        res.status(reviews)
+        res.status(200).send(reviews)
     } catch (error) {
         return { error: error.message };
     }

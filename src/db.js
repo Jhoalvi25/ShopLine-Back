@@ -59,11 +59,11 @@ Product.belongsToMany(User, {through: "Product_User"});
 User.hasMany(Review)
 Review.belongsTo(User)
 
-Review.hasMany(Review, {as: "Replies" ,foreignKey: 'reply_id', }) 
+Review.hasMany(Review, {as: "Replies" ,foreignKey: 'reply_id'}) 
 Review.belongsTo(Review, {foreignKey: 'reply_id', as: 'Parent'})
 
-
-
+Product.belongsToMany(Cart, {through: "product_Cart" })
+Cart.belongsToMany(Product, {through: "product_Cart" })
 
 
 // Aca vendrian las relaciones
