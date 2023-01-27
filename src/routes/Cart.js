@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getCart, createCart, getCarts } = require("../controllers/cartController")
+const { getCart, createCart, getCarts, addToCart } = require("../controllers/cartController")
 const { Cart, User } = require("../db");
 
 const router = Router();
@@ -24,6 +24,16 @@ router.post("/create", async (req, res) => {
   }
 });
 
+router.post("/add/:id", async (req, res) => {
+  const { id } = req.params
+  const { products } = req.body
+  try {
+    const clientCart = await addToCart(id, products)
+    return res.status(200).send(clientCart);
+  } catch (error) {
+    return { error: error.message };
+  }
+})
 
 router.get("/:id", async (req, res) => {
   try {
