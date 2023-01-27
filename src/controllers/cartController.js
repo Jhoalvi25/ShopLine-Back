@@ -20,12 +20,31 @@ const createCart = async (products) => {
   }
 };
 
+const addToCart = async (id, products) => {
+  try {
+      const clientCart = await Cart.findByPk(id)
+      const adding = await Product.findAll({
+        where: {
+          title: products
+        }
+      })
+
+      clientCart.addProduct(adding)
+      return clientCart;
+  } catch (error) {
+    return { error: error.message };
+  }
+}
+
 const getCart = async (id) => {
   try {
     const cartDetail = await Cart.findByPk(id, {
       include: {
         model: Product,
         attributes: ["title", "price", "image"],
+        through: {
+          attributes: [],
+        },
       },
     });
 
@@ -52,6 +71,7 @@ const getCarts = async () => {
 
 module.exports = {
   createCart,
+  addToCart,
   getCart,
   getCarts,
 };
