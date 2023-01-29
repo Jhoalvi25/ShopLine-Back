@@ -16,7 +16,7 @@ const router = Router();
 
 router.use("/products", Products);
 router.use("/categories", Categories);
-router.use("/users", Users);
+router.use("/user", Users);
 router.use("/cart", Cart);
 router.use("/reviews", Reviews);
 router.use("/payments", Payment);

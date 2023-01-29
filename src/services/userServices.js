@@ -22,7 +22,6 @@ exports.getUserInfoWithGoogle = async (user) => {
       userGoogle.registered = true;
       userGoogle.email = user.email;
       userGoogle.name = user.name;
-      userGoogle.image = user.picture;
 
       let userCreated = await User.create(userGoogle);
       return userCreated;
@@ -149,7 +148,7 @@ exports.createUser = async (user) => {
   user.rol =
     user.email === "jhoalvipereiraa@outlook.com"
       ? "Admin"
-      : user.email === "jhoalvipereira@gmail.com"
+      : user.email === "jhoalvipereiraa@gmail.com"
       ? "Admin"
       : "User";
   user.permissions =
@@ -157,7 +156,7 @@ exports.createUser = async (user) => {
       ? "All"
       : user.email === "jhoalvipereiraaa@gmail.com"
       ? "All"
-      : "Watch";
+      : "Client";
 
   try {
     if (userExists) {
