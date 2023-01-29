@@ -1,9 +1,6 @@
 const { Router } = require("express");
 const getPayment = require("../controllers/paymentController");
-// const PaymentController = require("../controllers/paymentController");
-// const PaymentServices = require("../services/paymentServices");
 
-// const PaymentInstance = new PaymentController(new PaymentServices());
 
 const router = Router();
 
@@ -18,6 +15,26 @@ router.post("/", async (req, res) => {
 })
 
 
+
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+// const PaymentController = require("../controllers/paymentController");
+// const PaymentServices = require("../services/paymentServices");
+
+// const PaymentInstance = new PaymentController(new PaymentServices());
+
+
 // router.get("/", (req, res) => {
 //     PaymentInstance.getPaymentLink(req, res)
 // })
@@ -25,6 +42,3 @@ router.post("/", async (req, res) => {
 // router.post("/", (req, res) => {
 //     PaymentInstance.getPaymentLink(req, res)
 // })
-
-
-module.exports = router;

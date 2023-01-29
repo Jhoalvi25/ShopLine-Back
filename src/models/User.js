@@ -61,7 +61,6 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM("All", "Edit", "Client", "Banned"),
         defaultValue: "Client",
       },
-
       image: {
         type: DataTypes.TEXT,
       },
