@@ -147,15 +147,15 @@ exports.createUser = async (user) => {
   // Asigning/Verifying role, permissions and plan /hardcoded
   user.password = hashedPassword;
   user.rol =
-    user.email === "jhoalvipereira@outlook.com"
+    user.email === "jhoalvipereiraa@outlook.com"
       ? "Admin"
       : user.email === "jhoalvipereira@gmail.com"
       ? "Admin"
       : "User";
   user.permissions =
-    user.email === "jhoalvipereira@outlook.com"
+    user.email === "jhoalvipereiraaa@outlook.com"
       ? "All"
-      : user.email === "jhoalvipereira@gmail.com"
+      : user.email === "jhoalvipereiraaa@gmail.com"
       ? "All"
       : "Watch";
 
@@ -198,7 +198,7 @@ exports.searchuser = async (name) => {
   } else {
     let user = await User.findAll({
       where: {
-        nickname: { [Op.like]: `%${name}%` },
+        name: { [Op.like]: `%${name}%` },
         email_verified: true,
         registered: true,
       },
