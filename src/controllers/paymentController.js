@@ -1,21 +1,53 @@
-const Stripe = require("stripe")
+const stripe = require("stripe")(process.env.STRIPE_KEY)
+const { Order, Payment } = require("../db")
 
 
 const getPayment = async (id, amount, description) => {
-    const stripe = new Stripe(process.env.STRIPE_KEY)
-    const payment = stripe.paymentIntents.create({
-        amount:amount,
-        currency: "USD",
-        description: description,
-        payment_method: id,
-        confirm: true
-    })
-   
-    return payment
+    try {
+        const payment = await stripe.paymentIntents.create({
+            amount:amount,
+            currency: "USD",
+            description: description,
+            payment_method: id,
+            confirm: true
+        })
+       
+        const { currency, payment_method_types, status } = payment
+
+        const newPayment = await Payment.create({
+            id: id,
+            amount: amount,
+            currency: currency,
+            payment_method_types: payment_method_types,
+            status: status,
+            description: description,
+        })
+
+        const newOrder = await Order.create({
+            payments:newPayment
+        })
+
+        const findPayment = await Payment.findAll({
+            where: {
+                id: id
+            }
+        })
+
+        newOrder.addPayment(findPayment)
+
+        return payment
+    } catch (error) {
+        return { error: error.message };
+    }
 }
 
 
-
+//1.-Crear modelo Order
+//2.-Generar la order y asociarla a un usuario
+//3.-Order 
+// -User
+// -Payment Id
+// 4.-Generar modelo Payment (guardar datos que genera stripe)
 
 
 
