@@ -22,14 +22,18 @@ const createCart = async (products) => {
 
 const addToCart = async (id, title) => {
   try {
-    let clientCart = await Cart.findByPk(id);
+    let clientCart = await Cart.findAll({
+      where: {
+        userId: id,
+      }
+    });
     let adding = await Product.findAll({
       where: {
         title: title,
       },
     });
 
-    clientCart.addProduct(adding);
+    clientCart.setProduct(adding);
 
     return clientCart;
   } catch (error) {
@@ -39,7 +43,10 @@ const addToCart = async (id, title) => {
 
 const getCart = async (id) => {
   try {
-    const cartDetail = await Cart.findByPk(id, {
+    const cartDetail = await Cart.findAll({
+      where: {
+        userId: id,
+      },
       include: {
         model: Product,
         attributes: ["title", "price", "image"],

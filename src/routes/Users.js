@@ -13,5 +13,6 @@ userRouter.delete('/:email', validateAccessToken, userController.deleteUser);
 userRouter.get('/verify/:email/:token', userController.verifyUser)
 
 userRouter.get('/search', userController.searchUsers)
+userRouter.patch('/configure/:userId', userController.patchUser)
 
 module.exports = userRouter;
