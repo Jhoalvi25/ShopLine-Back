@@ -26,9 +26,10 @@ router.post("/create", async (req, res) => {
 
 router.post("/add/:id", async (req, res) => {
   const { id } = req.params
-  const { products } = req.body
+  const { title } = req.body
   try {
-    const clientCart = await addToCart(id, products)
+    console.log(title, id)
+    const clientCart = await addToCart(id, title)
     return res.status(200).send(clientCart);
   } catch (error) {
     return { error: error.message };

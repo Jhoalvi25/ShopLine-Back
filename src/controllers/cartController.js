@@ -20,21 +20,22 @@ const createCart = async (products) => {
   }
 };
 
-const addToCart = async (id, products) => {
+const addToCart = async (id, title) => {
   try {
-      const clientCart = await Cart.findByPk(id)
-      const adding = await Product.findAll({
-        where: {
-          title: products
-        }
-      })
+    let clientCart = await Cart.findByPk(id);
+    let adding = await Product.findAll({
+      where: {
+        title: title,
+      },
+    });
 
-      clientCart.addProduct(adding)
-      return clientCart;
+    clientCart.addProduct(adding);
+
+    return clientCart;
   } catch (error) {
     return { error: error.message };
   }
-}
+};
 
 const getCart = async (id) => {
   try {

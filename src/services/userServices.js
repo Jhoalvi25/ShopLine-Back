@@ -1,4 +1,4 @@
-const { User } = require("../db.js");
+const { User, Cart } = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const generateToken = require("../utils/generateToken");
@@ -59,6 +59,9 @@ exports.getUserInfo = async (token, email) => {
             });
 
             if (user) {
+              const useCart = await Cart.create();
+              user.setCart(useCart);
+
               return user;
             } else throw new Error("Unauthorized");
           }
