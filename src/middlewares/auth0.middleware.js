@@ -10,7 +10,7 @@ const validateAccessToken = auth({
 });
 
 var client = jwksClient({
-  jwksUri: "https://dev-ril5g3yq77wjfx3s.us.auth0.com/.well-known/jwks.json",
+  jwksUri: "https://dev-0wcyb0rncjrw1ixe.us.auth0.com/.well-known/jwks.json",
 });
 
 function getKey(header, callback) {

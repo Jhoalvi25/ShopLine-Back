@@ -22,6 +22,7 @@ exports.getUserInfoWithGoogle = async (user) => {
       userGoogle.registered = true;
       userGoogle.email = user.email;
       userGoogle.name = user.name;
+      userGoogle.image = user.picture;
 
       let userCreated = await User.create(userGoogle);
       return userCreated;
