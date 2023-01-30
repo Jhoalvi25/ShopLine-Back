@@ -63,6 +63,8 @@ module.exports = (sequelize) => {
       },
       image: {
         type: DataTypes.TEXT,
+        defaultValue:
+          "https://www.antiagingya.com/es/wp-content/uploads/2015/01/img-default-autores.jpg",
       },
     },
     {
