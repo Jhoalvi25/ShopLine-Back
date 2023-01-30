@@ -1,5 +1,5 @@
 const  products  = require("../utils/products.js");
-const getAllProducts = require("../controllers/apiController")
+const { getAllProducts, getPopularProducts } = require("../controllers/apiController")
 const getProductDetail = require("../controllers/productDetailController")
 const { Router } = require("express");
 
@@ -29,5 +29,16 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+
+router.get("/popular", async (req, res) => {
+  try {
+     const popular = await getPopularProducts()
+    // let list = await getAllProducts()
+    // const popular = list.filter(e => e.rating > 3)
+    res.status(200).send(popular)
+  } catch (error) {
+    return { error: error.message };
+  }
+})
 
 module.exports = router;
