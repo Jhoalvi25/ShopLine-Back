@@ -39,8 +39,33 @@ const getAllProducts = async () => {
   }
 }
 
+const getPopularProducts = async () => {
+  try {
+    const apiRequest = await axios.get("https://fakestoreapi.com/products")
+    const apiProducts = apiRequest.data.map((elem) => {
+      return {
+        id: elem.id,
+        title: elem.title,
+        price: elem.price,
+        category: elem.category,
+        description: elem.description,
+        image: elem.image,
+        rating: elem.rating.rate,
+      };
+    });
+
+    const popular = apiProducts.filter(e => e.rating > 3)
+    return popular
+
+  }  catch (error) {
+    return { error: error.message };
+  }
+}
 
 
 
 
-module.exports = getAllProducts;
+module.exports = { 
+  getAllProducts, 
+  getPopularProducts
+ };
