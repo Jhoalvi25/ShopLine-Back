@@ -21,7 +21,7 @@ const sendEmail = async (email, subject, text) => {
       },
       from: "jhoalvipereira@gmail.com",
       tls: {
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
     });
     await transporter.sendMail({
