@@ -1,8 +1,8 @@
 const stripe = require("stripe")(process.env.STRIPE_KEY)
-const { Order, Payment } = require("../db")
+const { Order, Payment, User } = require("../db")
 
 
-const getPayment = async (id, amount, description) => {
+const getPayment = async (id, amount, description, userId) => {
     try {
         const payment = await stripe.paymentIntents.create({
             amount:amount,
@@ -33,7 +33,11 @@ const getPayment = async (id, amount, description) => {
             }
         })
 
+        const user = await User.findByPk(userId)
+
         newOrder.addPayment(findPayment)
+
+        user.setOrder(newOrder)
 
         return payment
     } catch (error) {
