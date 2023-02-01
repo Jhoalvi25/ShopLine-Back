@@ -3,9 +3,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index");
-const helmet = require("helmet");
-const nocache = require("nocache");
-const cors = require("cors");
 
 require("./db.js");
 
@@ -24,50 +21,15 @@ server.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
- 
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, DELETE, PATCH"
+  );
+
   next();
 });
-
-// auth0
-
-const PORT = parseInt(process.env.PORT, 10);
-const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 
 server.use("/", routes);
-server.use(
-  helmet({
-    hsts: {
-      maxAge: 31536000,
-    },
-    contentSecurityPolicy: {
-      useDefaults: false,
-      directives: {
-        "default-src": ["'none'"],
-        "frame-ancestors": ["'none'"],
-      },
-    },
-    frameguard: {
-      action: "deny",
-    },
-  })
-);
-
-server.use((req, res, next) => {
-  res.contentType("application/json; charset=utf-8");
-  next();
-});
-server.use(nocache());
-
-server.use(
-  cors({
-    origin: CLIENT_ORIGIN_URL,
-    methods: ["GET"],
-    allowedHeaders: ["Authorization", "Content-Type"],
-    maxAge: 86400,
-  })
-);
 
 // Error catching endware.
 server.use((err, req, res, next) => {
