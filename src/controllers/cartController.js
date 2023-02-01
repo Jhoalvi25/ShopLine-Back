@@ -1,4 +1,4 @@
-const { Cart, Product } = require("../db");
+const { Cart, Product, User } = require("../db");
 
 const createCart = async (products) => {
   try {
@@ -20,22 +20,29 @@ const createCart = async (products) => {
   }
 };
 
-const addToCart = async (id, title) => {
+const addToCart = async (id, productId) => {
   try {
-    let clientCart = await Cart.findAll({
+    
+    let [cart, created] = await Cart.findOrCreate({
       where: {
         userId: id,
       }
     });
+    
+    let user = await User.findByPk(id)
+    if(!created){
+      user.setCart(cart)
+    }
+
     let adding = await Product.findAll({
       where: {
-        title: title,
+        id: productId,
       },
     });
 
-    clientCart.setProduct(adding);
+    cart.addProduct(adding);
 
-    return clientCart;
+    return cart;
   } catch (error) {
     return { error: error.message };
   }

@@ -60,9 +60,7 @@ exports.getUserInfo = async (token, email) => {
             });
 
             if (user) {
-              const useCart = await Cart.create();
-              user.setCart(useCart);
-
+            
               return user;
             } else throw new Error("Unauthorized");
           }
