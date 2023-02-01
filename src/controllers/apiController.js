@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { Product } = require('../db')
+const { Op } = require("sequelize")
 
 
 
@@ -41,23 +42,35 @@ const getAllProducts = async () => {
 
 const getPopularProducts = async () => {
   try {
-    const apiRequest = await axios.get("https://fakestoreapi.com/products")
-    const apiProducts = apiRequest.data.map((elem) => {
-      return {
-        id: elem.id,
-        title: elem.title,
-        price: elem.price,
-        category: elem.category,
-        description: elem.description,
-        image: elem.image,
-        rating: elem.rating.rate,
-      };
-    });
+    // const apiRequest = await axios.get("https://fakestoreapi.com/products")
+    // const apiProducts = apiRequest.data.map((elem) => {
+    //   return {
+    //     id: elem.id,
+    //     title: elem.title,
+    //     price: elem.price,
+    //     category: elem.category,
+    //     description: elem.description,
+    //     image: elem.image,
+    //     rating: elem.rating.rate,
+    //   };
+    // });
 
-    const popular = apiProducts.filter(e => e.rating > 3)
+    // console.log(apiProducts)
+    // const popular = apiProducts.filter(e => e.rating > 3)
+    // console.log(popular)
+    // return popular
+    const popular = await Product.findAll({
+      where: {
+        rating: {
+          [Op.gt]: 2.9
+        }
+      }
+    })
+
     return popular
 
   }  catch (error) {
+    console.log(popular, "aqui")
     return { error: error.message };
   }
 }
