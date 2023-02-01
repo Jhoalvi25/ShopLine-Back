@@ -32,12 +32,14 @@ router.get("/:id", async (req, res) => {
 
 router.get("/popular", async (req, res) => {
   try {
-     const popular = await getPopularProducts()
-    // let list = await getAllProducts()
-    // const popular = list.filter(e => e.rating > 3)
-    res.status(200).send(popular)
-  } catch (error) {
+     const pop = await getPopularProducts()
+     //let list = await getAllProducts()
+     //console.log(list)
+     //const popular = list.filter(e => e.rating > 3)
+     return res.status(200).send(pop)
+    } catch (error) {
     return { error: error.message };
+
   }
 })
 
