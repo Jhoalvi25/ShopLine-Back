@@ -25,9 +25,9 @@ router.post("/create", async (req, res) => {
 });
 
 router.post("/add/:id", async (req, res) => {
-  const { id } = req.params
-  const { productId } = req.body
   try {
+    const { id } = req.params
+    const productId = parseInt(Object.keys(req.body).pop())
     console.log(productId, id)
     const clientCart = await addToCart(id, productId)
     return res.status(200).send(clientCart);
