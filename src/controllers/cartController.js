@@ -56,7 +56,7 @@ const getCart = async (id) => {
       },
       include: {
         model: Product,
-        attributes: ["title", "price", "image"],
+        attributes: ["id","title", "price", "image"],
         through: {
           attributes: [],
         },
@@ -84,9 +84,33 @@ const getCarts = async () => {
   return carts;
 };
 
+
+const deleteFromCart = async (id, productId) => {
+  try {
+    const [cart] = await Cart.findAll({
+      where:{
+        userId: id
+      },
+    })
+
+    const deleted = await Product.findAll({
+      where:{
+        id: productId
+      }
+    })
+    
+
+    cart.removeProduct(deleted)
+    return cart
+  } catch (error) {
+    return { error: error.message }; 
+  }
+}
+
 module.exports = {
   createCart,
   addToCart,
   getCart,
   getCarts,
+  deleteFromCart
 };
