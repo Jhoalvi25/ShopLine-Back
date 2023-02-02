@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getCart, createCart, getCarts, addToCart } = require("../controllers/cartController")
+const { getCart, createCart, getCarts, addToCart, deleteFromCart } = require("../controllers/cartController")
 const { Cart, User } = require("../db");
 
 const router = Router();
@@ -48,5 +48,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const { productId } = req.query
+    console.log(productId, id)
+    const cartChanged = await deleteFromCart(id, productId)
+    return res.status(200).send(cartChanged)
+  } catch (error) {
+    return { error: error.message };
+  }
+})
 module.exports = router;
