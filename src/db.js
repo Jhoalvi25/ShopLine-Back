@@ -66,7 +66,7 @@ Product.belongsToMany(Cart, {through: "product_Cart" })
 Cart.belongsToMany(Product, {through: "product_Cart" })
 
 User.belongsToMany(Payment, {through: "user_payment"});
-Payment.belongsTo(User);
+Payment.belongsToMany(User, {through: "user_payment"});
 
 
 // Aca vendrian las relaciones
