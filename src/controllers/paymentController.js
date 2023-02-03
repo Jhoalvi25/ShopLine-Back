@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_KEY)
 const { Order, Payment, User } = require("../db")
 
 
-const getPayment = async (id, amount, description) => {
+const getPayment = async (id, amount, description, userId) => {
     try {
         const payment = await stripe.paymentIntents.create({
             amount:amount,
@@ -24,10 +24,10 @@ const getPayment = async (id, amount, description) => {
         })
 
         
-        // const user = await User.findByPk(userId)
+        const user = await User.findByPk(userId)
 
-        // const pay = await user.addPayment(newPayment)
-        // console.log(pay, "payyyy")
+        const pay = await user.addPayment(newPayment)
+    
         return payment
     } catch (error) {
         return { error: error.message };
@@ -43,7 +43,10 @@ const getReceipts = async (userId) => {
             },
             include:{
                 model: Payment,
-                attributes: ["id", "amount", "currency", "status", "payment_method_types", "description"]
+                attributes: ["id", "amount", "currency", "status", "payment_method_types", "description"],
+                through: {
+                    attributes: [],
+                  },
             }
         })
         

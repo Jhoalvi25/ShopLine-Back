@@ -5,9 +5,9 @@ const {getPayment, getReceipts } = require("../controllers/paymentController");
 const router = Router();
 
 router.post("/", async (req, res) => {
-    const { id, amount, description } = req.body;
+    const { id, amount, description, userId } = req.body;
     try {
-        const stripePayment = await getPayment(id, amount, description )
+        const stripePayment = await getPayment(id, amount, description, userId )
         return res.status(200).send(stripePayment);
     } catch (error) {
         return { error: error.message };
