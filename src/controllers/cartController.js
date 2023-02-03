@@ -107,10 +107,24 @@ const deleteFromCart = async (id, productId) => {
   }
 }
 
+const deleteCartAfterPayment = async (userId) => {
+    const [cart] = await Cart.findAll({
+      where:{
+        userId: userId
+      }
+    })
+
+    cart.destroy()
+
+    return "The cart has been paid and destroyed";
+}
+
+
 module.exports = {
   createCart,
   addToCart,
   getCart,
   getCarts,
-  deleteFromCart
+  deleteFromCart,
+  deleteCartAfterPayment
 };

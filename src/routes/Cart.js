@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getCart, createCart, getCarts, addToCart, deleteFromCart } = require("../controllers/cartController")
+const { getCart, createCart, getCarts, addToCart, deleteFromCart, deleteCartAfterPayment } = require("../controllers/cartController")
 const { Cart, User } = require("../db");
 
 const router = Router();
@@ -28,7 +28,6 @@ router.post("/add/:id", async (req, res) => {
   try {
     const { id } = req.params
     const productId = parseInt(Object.keys(req.body).pop())
-    console.log(productId, id)
     const clientCart = await addToCart(id, productId)
     return res.status(200).send(clientCart);
   } catch (error) {
@@ -52,11 +51,22 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params
     const { productId } = req.query
-    console.log(productId, id)
     const cartChanged = await deleteFromCart(id, productId)
     return res.status(200).send(cartChanged)
   } catch (error) {
     return { error: error.message };
   }
 })
+
+router.delete("/delete", async (req, res) => {
+  try {
+    const { userId } = req.query
+    const cartPaid = await deleteCartAfterPayment(userId)
+    return res.status(200).send(cartPaid)
+  } catch (error) {
+    return { error: error.message };
+    
+  }
+})
+
 module.exports = router;
