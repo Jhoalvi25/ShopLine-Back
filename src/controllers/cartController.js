@@ -139,6 +139,41 @@ const deleteCartAfterPayment = async (userId) => {
     return "The cart has been paid and destroyed";
 }
 
+const addingFromStock = async (productId) => {
+   try {
+      const add = await Product.findByPk(productId)
+      if(add[0].dataValues.stock === 10){
+        return null
+      } else {
+        await add.set({
+          stock: stock + 1
+        })
+        add = await add.save()
+      }
+      return add
+   } catch (error) {
+    return { error: error.message }; 
+   }
+}
+
+const removingFromStock  = async (productId) => {
+  try {
+    const remove = await Product.findByPk(productId)
+      if(remove[0].dataValues.stock === 1){
+        return null
+      } else {
+        await remove.set({
+          stock: stock - 1
+        })
+        remove = await remove.save()
+      }
+      return remove
+  } catch (error) {
+    return { error: error.message }; 
+  }
+}
+
+
 
 module.exports = {
   createCart,
@@ -146,5 +181,7 @@ module.exports = {
   getCart,
   getCarts,
   deleteFromCart,
-  deleteCartAfterPayment
+  deleteCartAfterPayment,
+  addingFromStock,
+  removingFromStock
 };
