@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
       rating: {
         type: DataTypes.FLOAT,
       },
+      stock: {
+        type:DataTypes.INTEGER,
+        defaultValue: 10
+      }
     },
     {
       timestamps: false,

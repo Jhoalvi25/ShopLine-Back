@@ -40,6 +40,26 @@ const addToCart = async (id, productId) => {
       },
     });
 
+    if(adding[0].dataValues.stock === 0){
+      return null
+    } else {
+      // await Product.upsert({
+      //   id:productId,
+      //   stock: stock--
+      // })
+      // OR
+      // adding[0].dataValues.stock-- then save()
+      // OR
+      // with the method update()
+      // OR
+      // adding.set({
+      //   stock: stock--
+      // })
+      // adding = await adding.save()
+
+    }
+
+    //console.log(adding[0].dataValues.stock)
     cart.addProduct(adding);
 
     return cart;
@@ -56,7 +76,7 @@ const getCart = async (id) => {
       },
       include: {
         model: Product,
-        attributes: ["id","title", "price", "image"],
+        attributes: ["id","title", "price", "image", "stock"],
         through: {
           attributes: [],
         },

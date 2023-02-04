@@ -62,15 +62,14 @@ const getPopularProducts = async () => {
     const popular = await Product.findAll({
       where: {
         rating: {
-          [Op.gt]: 2.9
+          [Op.gt]: parseInt(3)
         }
       }
     })
-
+    console.log(popular, "hereee")
     return popular
 
   }  catch (error) {
-    console.log(popular, "aqui")
     return { error: error.message };
   }
 }
