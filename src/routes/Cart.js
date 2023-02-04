@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getCart, createCart, getCarts, addToCart, deleteFromCart, deleteCartAfterPayment } = require("../controllers/cartController")
+const { getCart, createCart, getCarts, addToCart, deleteFromCart, deleteCartAfterPayment, addingFromStock, removingFromStock } = require("../controllers/cartController")
 const { Cart, User } = require("../db");
 
 const router = Router();
@@ -13,6 +13,17 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const cartDetail = await getCart(id)
+
+    res.status(200).send(cartDetail);
+  } catch (error) {
+    return { error: error.message };
+  }
+});
 
 router.post("/create", async (req, res) => {
   const { products } = req.body;
@@ -35,17 +46,25 @@ router.post("/add/:id", async (req, res) => {
   }
 })
 
-router.get("/:id", async (req, res) => {
+router.post("/plus/:productId", async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const cartDetail = await getCart(id)
-
-    res.status(200).send(cartDetail);
+    const { productId } = req.params
+    const plus = await addingFromStock(productId)
+    return res.status(200).send(plus)
   } catch (error) {
     return { error: error.message };
   }
-});
+})
+
+router.post("/minus/:productId", async (req, res) => {
+  try {
+    const { productId } = req.params
+    const minus = await removingFromStock(productId)
+    return res.status(200).send(minus)
+  } catch (error) {
+    return { error: error.message };
+  }
+})
 
 router.delete("/delete/:id", async (req, res) => {
   try {
