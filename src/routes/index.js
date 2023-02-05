@@ -5,9 +5,10 @@ const { Router } = require("express");
 const Products = require("./Products");
 const Categories = require("./Categories");
 const Users = require("./Users");
+const Admin = require("./Admin");
 const Cart = require("./Cart");
-const Reviews = require("./Review")
-const Payment = require("./Payments")
+const Reviews = require("./Review");
+const Payment = require("./Payments");
 
 const router = Router();
 
@@ -17,6 +18,7 @@ const router = Router();
 router.use("/products", Products);
 router.use("/categories", Categories);
 router.use("/user", Users);
+router.use("/admin", Admin);
 router.use("/cart", Cart);
 router.use("/reviews", Reviews);
 router.use("/payments", Payment);

@@ -148,15 +148,15 @@ exports.createUser = async (user) => {
   // Asigning/Verifying role, permissions and plan /hardcoded
   user.password = hashedPassword;
   user.rol =
-    user.email === "jhoalvipereiraa@outlook.com"
+    user.email === "jhoalvipereira@gmail.com"
       ? "Admin"
-      : user.email === "jhoalvipereiraa@gmail.com"
+      : user.email === "jhoalvipereira@gmail.com"
       ? "Admin"
       : "User";
   user.permissions =
-    user.email === "jhoalvipereiraaa@outlook.com"
+    user.email === "jhoalvipereira@gmail.com"
       ? "All"
-      : user.email === "jhoalvipereiraaa@gmail.com"
+      : user.email === "jhoalvipereira@gmail.com"
       ? "All"
       : "Client";
 
