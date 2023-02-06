@@ -9,6 +9,7 @@ const Admin = require("./Admin");
 const Cart = require("./Cart");
 const Reviews = require("./Review");
 const Payment = require("./Payments");
+const List = require("./List")
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use("/admin", Admin);
 router.use("/cart", Cart);
 router.use("/reviews", Reviews);
 router.use("/payments", Payment);
+router.use("/list", List);
 
 module.exports = router;
