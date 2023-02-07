@@ -43,9 +43,9 @@ const getReceipts = async (userId) => {
             },
             include:{
                 model: Payment,
-                attributes: ["id", "amount", "currency", "status", "payment_method_types", "description"],
+                attributes: ["id", "amount", "currency", "status", "payment_method_types", "description", "createdAt"],
                 through: {
-                    attributes: [],
+                    attributes: ["createdAt"],
                   },
             }
         })

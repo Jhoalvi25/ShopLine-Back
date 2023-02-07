@@ -46,7 +46,7 @@ router.post("/add/:id", async (req, res) => {
   }
 })
 
-router.post("/plus/:productId", async (req, res) => {
+router.patch("/plus/:productId", async (req, res) => {
   try {
     const { productId } = req.params
     const plus = await addingFromStock(productId)
@@ -56,7 +56,7 @@ router.post("/plus/:productId", async (req, res) => {
   }
 })
 
-router.post("/minus/:productId", async (req, res) => {
+router.patch("/minus/:productId", async (req, res) => {
   try {
     const { productId } = req.params
     const minus = await removingFromStock(productId)
