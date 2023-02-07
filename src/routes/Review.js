@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     const { id } = req.params   
     try {
+        console.log(id, req.params)
         let userReview = await getReview(id)
         res.status(200).send(userReview)
     } catch (error) {
@@ -25,9 +26,10 @@ router.get("/:id", async (req, res) => {
 
 
 router.post("/create", async (req, res) => {
-    const { content, rating } = req.body
+    const { content, rating, productId, username } = req.body
     try {
-        let newReview = await postReview(content, rating)
+        console.log(productId)
+        let newReview = await postReview(content, rating, productId, username)
         res.status(200).send(newReview);
         
     } catch (error) {

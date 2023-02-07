@@ -40,26 +40,7 @@ const addToCart = async (id, productId) => {
       },
     });
 
-    if(adding[0].dataValues.stock === 0){
-      return null
-    } else {
-      // await Product.upsert({
-      //   id:productId,
-      //   stock: stock--
-      // })
-      // OR
-      // adding[0].dataValues.stock-- then save()
-      // OR
-      // with the method update()
-      // OR
-      // adding.set({
-      //   stock: stock--
-      // })
-      // adding = await adding.save()
-
-    }
-
-    //console.log(adding[0].dataValues.stock)
+    
     cart.addProduct(adding);
 
     return cart;
@@ -142,14 +123,11 @@ const deleteCartAfterPayment = async (userId) => {
 const addingFromStock = async (productId) => {
    try {
       const add = await Product.findByPk(productId)
-      if(add[0].dataValues.stock === 10){
-        return null
-      } else {
-        await add.set({
-          stock: stock + 1
-        })
-        add = await add.save()
-      }
+      
+      await add.update({
+        stock: add.stock + 1
+      })
+
       return add
    } catch (error) {
     return { error: error.message }; 
@@ -158,15 +136,14 @@ const addingFromStock = async (productId) => {
 
 const removingFromStock  = async (productId) => {
   try {
-    const remove = await Product.findByPk(productId)
-      if(remove[0].dataValues.stock === 1){
-        return null
-      } else {
-        await remove.set({
-          stock: stock - 1
-        })
-        remove = await remove.save()
-      }
+
+    let remove = await Product.findByPk(productId)
+    
+    await remove.update({
+        stock: remove.stock - 1
+      })
+    
+   
       return remove
   } catch (error) {
     return { error: error.message }; 

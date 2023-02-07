@@ -12,6 +12,10 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      username: {
+        type: DataTypes.STRING,
+        defaultValue:null
+      },
       replyingTo: {
         type: DataTypes.STRING,
         defaultValue: null,

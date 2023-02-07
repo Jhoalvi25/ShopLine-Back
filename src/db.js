@@ -65,6 +65,7 @@ List.belongsTo(User);
 Review.hasMany(Review, {as: "Replies" ,foreignKey: 'reply_id'}) 
 Review.belongsTo(Review, {foreignKey: 'reply_id', as: 'Parent'})
 
+
 Product.belongsToMany(Cart, {through: "product_Cart" })
 Cart.belongsToMany(Product, {through: "product_Cart" })
 
@@ -74,6 +75,8 @@ Product.belongsToMany(List, { through: 'list_product' });
 User.belongsToMany(Payment, {through: "user_payment"});
 Payment.belongsToMany(User, {through: "user_payment"});
 
+Product.belongsToMany(Review, {through: "product_review"})
+Review.belongsToMany(Product, {through: "product_review"})
 
 
 
