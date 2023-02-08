@@ -31,7 +31,11 @@ module.exports = (sequelize) => {
       },
       stock: {
         type:DataTypes.INTEGER,
-        defaultValue: 9
+        defaultValue: 9,
+        validate: {
+          min: 1,
+          max: 9
+        }
       }
     },
     {
