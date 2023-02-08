@@ -28,12 +28,14 @@ const getAllProducts = async () => {
         category: e.category,
         description: e.description,
         image: e.image,
-        rating: e.rating
+        rating: e.rating,
       }
     })
   });
+  
+   const products = await Product.findAll()
+   return products
     
-    return apiProducts
 
   } catch (error) {
     return { error: error.message };
