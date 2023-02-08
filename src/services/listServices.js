@@ -179,7 +179,7 @@ exports.destroyProductInList = async (productToDelete) => {
     const product = await Product.findOne({ where: { id: productId } });
     const list = await List.findOne({ where: { id: listId } });
 
-    await list.removeAnime(product);
+    await list.removeProduct(product);
     return "Product deleted succesfully";
   } catch (err) {
     throw new Error(err.message);
